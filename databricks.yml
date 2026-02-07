@@ -5,6 +5,26 @@ bundle:
 include:
   - resources/*.yml
 
+sync:
+  include:
+    - src/**
+    - resources/**
+  exclude:
+    - .git/**
+    - .github/**
+    - data/**
+    - "**/*.tar"
+    - "**/*.tar.gz"
+    - "**/*.tar.xz"
+    - "**/*.zip"
+    - "**/*.parquet"
+    - "**/*.npy"
+    - "**/*.pt"
+    - "**/*.pth"
+    - "**/__pycache__/**"
+    - "**/.pytest_cache/**"
+    - "**/.DS_Store"
+
 variables:
   catalog:
     description: "Unity Catalog catalog name to deploy data assets into"
