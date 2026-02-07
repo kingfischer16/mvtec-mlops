@@ -1,0 +1,31 @@
+bundle:
+  name: mvtec-mlops-env
+
+workspace:
+  host: https://dbc-97bdbe9f-0433.cloud.databricks.com
+  root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+include:
+  - resources/*.yml
+
+
+variables:
+  catalog:
+    description: "Unity Catalog catalog name to deploy data assets into"
+    default: dev
+
+
+targets:
+  dev:
+    default: true
+    mode: development
+    variables:
+      catalog: dev
+  test:
+    mode: development
+    variables:
+      catalog: test
+  prod:
+    mode: production
+    variables:
+      catalog: prod

@@ -1,0 +1,29 @@
+resources:
+  jobs:
+    mvtec_mlops_pipeline:
+      name: mvtec-mlops-pipeline-${bundle.target}
+
+      tasks:
+        - task_key: setup
+          notebook_task:
+            notebook_path: ${workspace.file_path}/files/src/notebooks/00_setup_environment.py
+          # Use serverless compute for workflows (no cluster config)
+          # Serverless compute for workflows is supported and can be automated with DABs. [3](https://docs.databricks.com/aws/en/resources/limits)
+
+        - task_key: ingest_index
+          depends_on:
+            - task_key: setup
+          notebook_task:
+            notebook_path: ${workspace.file_path}/files/src/notebooks/01_ingest_and_index.py
+
+        - task_key: train
+          depends_on:
+            - task_key: ingest_index
+          notebook_task:
+            notebook_path: ${workspace.file_path}/files/src/notebooks/02_train_vae.py
+
+        - task_key: evaluate
+          depends_on:
+            - task_key: train
+          notebook_task:
+            notebook_path: ${workspace.file_path}/src/notebooks/04_evaluate_transfer
