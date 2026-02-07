@@ -1,15 +1,15 @@
 # MVTec MLOps Pipeline
 
-A comprehensive MLOps pipeline for industrial anomaly detection, built entirely on Databricks Free Edition. This project demonstrates best practices for data engineering, machine learning experimentation, and model deployment with full traceability and governance.
+A comprehensive MLOps pipeline for industrial anomaly detection, built on Databricks Community Edition (free tier). This project demonstrates best practices for data engineering, machine learning experimentation, and model deployment with full traceability and governance.
 
 ## 🎯 Project Overview
 
-This project implements a production-ready MLOps pipeline using the Databricks Free Edition, showcasing:
+This project implements a production-ready MLOps pipeline using the Databricks Community Edition (free tier), showcasing:
 
 - **Medallion Architecture**: Bronze/Silver/Gold data layers for structured data processing
 - **Image Processing Pipeline**: Handling industrial anomaly detection images across the medallion architecture
 - **ML Experimentation**: Systematic model development and hyperparameter tuning
-- **Full Traceability**: Unity Catalog and MLflow integration for data lineage, model versioning, and experiment tracking
+- **Full Traceability**: MLflow integration for model versioning and experiment tracking (Unity Catalog planned for paid tiers)
 - **Deployment Ready**: End-to-end pipeline from raw data to deployed models
 
 The project focuses on industrial anomaly detection using the MVTec Anomaly Detection (AD) dataset, implementing computer vision models to identify defects in manufactured products.
@@ -30,9 +30,9 @@ Bronze (Raw) → Silver (Cleaned) → Gold (Feature/Aggregated)
 
 ### Technology Stack
 
-- **Platform**: Databricks Community Edition (Free Tier)
-- **Data Governance**: Unity Catalog for data discovery and lineage
+- **Platform**: Databricks Community Edition (free tier)
 - **Experiment Tracking**: MLflow for model versioning and metrics
+- **Data Governance**: Delta Lake for data reliability (Unity Catalog for paid tiers)
 - **Image Processing**: PySpark for distributed image processing
 - **ML Frameworks**: PyTorch/TensorFlow for deep learning models
 - **Orchestration**: Databricks Workflows (to be added via Asset Bundles)
@@ -45,11 +45,11 @@ Bronze (Raw) → Silver (Cleaned) → Gold (Feature/Aggregated)
 - Scalable image transformation pipeline
 - Metadata extraction and cataloging
 
-### 2. Unity Catalog Integration
-- Complete data lineage tracking from raw images to predictions
-- Governed access to datasets and models
-- Catalog-based organization of tables and models
-- Audit logging for compliance
+### 2. Data Governance & Catalog
+- Delta Lake for ACID transactions and data versioning
+- Structured table organization for Bronze/Silver/Gold layers
+- Metadata management and data quality tracking
+- Unity Catalog integration available when migrating to paid tiers
 
 ### 3. MLflow Traceability
 - Automatic logging of all experiments and runs
@@ -92,12 +92,13 @@ Bronze (Raw) → Silver (Cleaned) → Gold (Feature/Aggregated)
 # Navigate to Repos → Add Repo → Enter repository URL
 ```
 
-### 3. Unity Catalog Setup
+### 3. Database and Schema Setup
 
-Follow the Databricks documentation to enable Unity Catalog in your workspace (available in free tier with limitations):
-- Create a catalog for the project
-- Set up schemas for Bronze, Silver, and Gold layers
-- Configure appropriate permissions
+In Databricks Community Edition, use the default Hive metastore:
+- Create a database for the project (e.g., `mvtec_mlops`)
+- Set up schemas/tables for Bronze, Silver, and Gold layers
+- Use Delta Lake format for all tables
+- Note: Unity Catalog features require paid Databricks tiers
 
 ### 4. Run Pipeline Notebooks
 
@@ -148,10 +149,11 @@ mvtec-mlops/
 
 Every step of the pipeline is tracked:
 
-- **Data Lineage**: Unity Catalog tracks data transformations from raw images to features
+- **Data Lineage**: Delta Lake provides data versioning and time travel capabilities
 - **Experiment Tracking**: MLflow logs all training runs with parameters, metrics, and artifacts
-- **Model Versioning**: All models are versioned with metadata and lineage
-- **Audit Trail**: Complete history of data access and model changes
+- **Model Versioning**: All models are versioned in MLflow Model Registry with metadata
+- **Audit Trail**: MLflow tracking provides complete history of experiments and model changes
+- **Note**: Full Unity Catalog lineage features are available when upgrading to paid tiers
 
 ## 🔮 Coming Soon
 
@@ -163,6 +165,7 @@ The following features are currently in development and will be added to the rep
 - **Advanced Models**: Ensemble methods and transformer-based architectures
 - **Real-time Inference**: Model serving endpoints for production use
 - **Monitoring & Alerting**: Model performance tracking and drift detection
+- **Unity Catalog Migration**: Documentation for upgrading to paid tiers with Unity Catalog
 
 ## 📖 MVTec Anomaly Detection Dataset
 
@@ -181,7 +184,7 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is open source and available for use. A license file will be added in future updates.
 
 ## 🙏 Acknowledgments
 
