@@ -95,7 +95,7 @@ Bronze (Raw) → Silver (Cleaned) → Gold (Feature/Aggregated)
 ### 3. Database and Schema Setup
 
 In Databricks Community Edition, use the default Hive metastore:
-- Create a database for the project (e.g., `mvtec_mlops`)
+- Create a database for the project (e.g., `mvtec_ad_mlops`)
 - Set up schemas/tables for Bronze, Silver, and Gold layers
 - Use Delta Lake format for all tables
 - Note: Unity Catalog features require paid Databricks tiers
@@ -178,13 +178,15 @@ This project uses the MVTec AD dataset, a benchmark dataset for anomaly detectio
 
 Learn more: [MVTec AD Dataset](https://www.mvtec.com/company/research/datasets/mvtec-ad)
 
+**Note**: Please review the MVTec AD dataset license and terms of use before downloading and using the dataset. The dataset is freely available for research and educational purposes.
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## 📝 License
 
-This project is open source and available for use. A license file will be added in future updates.
+This project's license will be determined and added in future updates. Until then, please contact the repository owner for usage permissions.
 
 ## 🙏 Acknowledgments
 
