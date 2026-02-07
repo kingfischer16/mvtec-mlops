@@ -142,7 +142,7 @@ mvtec-mlops/
 3. **Feature Engineering**: Gold layer creates ML-ready features
 4. **Experimentation**: Multiple models are trained and tracked via MLflow
 5. **Model Selection**: Best performing model is identified
-6. **Registration**: Model is registered in Unity Catalog model registry
+6. **Registration**: Model is registered in MLflow Model Registry
 7. **Deployment**: Model is deployed for inference
 
 ## 📊 Data Lineage & Traceability
