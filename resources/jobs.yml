@@ -70,3 +70,25 @@ resources:
               - "/Volumes/${var.catalog}/bronze/raw_files/mvtec_ad/"
               - "--mode"
               - "overwrite"
+        
+        - task_key: build_base_tables
+          depends_on:
+            - task_key: index_images
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/pipelines/gold_base_tables.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--input_table_name"
+              - "silver.image_index"
+              - "--output_table_name"
+              - "gold.mvtec_ad"
+              - "--products"
+              - "cable"
+              - "capsule"
+              - "grid"
+              - "metal_nut"
+              - "transistor"
+              - "--mode"
+              - "overwrite"

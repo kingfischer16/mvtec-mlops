@@ -31,8 +31,6 @@ def crawl_files(base_path):
             })
     return spark.createDataFrame(pd.DataFrame(file_records))
 
-# ...existing code...
-
 def main():
     """
     Main function to index raw images and write to silver table.

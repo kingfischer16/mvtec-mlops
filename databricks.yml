@@ -11,19 +11,19 @@ sync:
     - resources/**
   exclude:
     - .git/**
-    - .github/**
-    - data/**
-    - "**/*.tar"
-    - "**/*.tar.gz"
-    - "**/*.tar.xz"
-    - "**/*.zip"
-    - "**/*.parquet"
-    - "**/*.npy"
-    - "**/*.pt"
-    - "**/*.pth"
-    - "**/__pycache__/**"
-    - "**/.pytest_cache/**"
-    - "**/.DS_Store"
+    #- .github/**
+    #- data/**
+    #- "**/*.tar"
+    #- "**/*.tar.gz"
+    #- "**/*.tar.xz"
+    #- "**/*.zip"
+    #- "**/*.parquet"
+    #- "**/*.npy"
+    #- "**/*.pt"
+    #- "**/*.pth"
+    #- "**/__pycache__/**"
+    #- "**/.pytest_cache/**"
+    #- "**/.DS_Store"
 
 variables:
   catalog:
