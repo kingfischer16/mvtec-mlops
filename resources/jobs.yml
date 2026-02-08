@@ -58,7 +58,7 @@ resources:
         - task_key: index_images
           environment_key: default
           spark_python_task:
-            python_file: ${workspace.root_path}/files/src/piplines/silver_index.py
+            python_file: ${workspace.root_path}/files/src/pipelines/silver_index.py
             parameters:
               - "--catalog"
               - "${var.catalog}"
