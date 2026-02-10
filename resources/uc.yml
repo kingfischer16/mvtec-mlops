@@ -31,7 +31,7 @@ resources:
       catalog_name: prod
       name: gold
   
-  # Create volumes for raw file drops (imaes, zips, wheels, etc.)
+  # Create volumes for raw file drops (images, zips, wheels, etc.)
   volumes: 
     dev_bronze_raw_files:
       catalog_name: dev
