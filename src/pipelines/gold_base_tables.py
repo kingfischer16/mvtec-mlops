@@ -72,7 +72,7 @@ def main():
     args = parser.parse_args()
     
     # Load silver index table
-    print(f"Loading silver index table: {args.catalog}.silver.{args.input_table_name}")
+    print(f"Loading silver index table: {args.catalog}.{args.input_table_name}")
     df_input = spark.read.table(f"{args.catalog}.{args.input_table_name}")
     
     # Build gold base table
