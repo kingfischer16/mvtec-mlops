@@ -1,0 +1,125 @@
+resources:
+  jobs:
+    # -----------------------------------------
+    # Job 1: Bootstrap / setup-only
+    # -----------------------------------------
+    mvtec_bootstrap:
+      name: mvtec-bootstrap-${bundle.target}
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies: []  # add pip deps later if needed
+
+      tasks:
+        - task_key: setup
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/notebooks/00_setup_environment.py
+
+    # -----------------------------------------
+    # Job 2: Main pipeline (ingest → train → eval)
+    # -----------------------------------------
+    mvtec_pipeline:
+      name: mvtec-pipeline-${bundle.target}
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies: []  # add torch/others later, or install inside code
+      tasks:
+        - task_key: train
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/notebooks/02_train_vae.py
+
+        - task_key: evaluate
+          depends_on:
+            - task_key: train
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/notebooks/04_evaluate_transfer.py
+    
+    # -----------------------------------------
+    # Job 3: Index images and build base tables
+    # -----------------------------------------
+    mvtec_indexing:
+      name: mvtec-build-base-tables-${bundle.target}
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies: []  # add pip deps later if needed
+
+      tasks:
+        - task_key: index_images
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/pipelines/silver_index.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "silver"
+              - "--table_name"
+              - "image_index"
+              - "--raw_volume_path"
+              - "/Volumes/${var.catalog}/bronze/raw_files/mvtec_ad/"
+              - "--mode"
+              - "overwrite"
+        
+        - task_key: build_base_tables
+          depends_on:
+            - task_key: index_images
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/pipelines/gold_base_tables.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--input_table_name"
+              - "silver.image_index"
+              - "--output_table_name"
+              - "gold.mvtec_ad"
+              - "--products"
+              - "cable"
+              - "capsule"
+              - "grid"
+              - "metal_nut"
+              - "transistor"
+              - "--mode"
+              - "overwrite"
+
+    # -----------------------------------------
+    # Job 4: Create development split labels
+    # -----------------------------------------
+    mvtec_dev_split:
+      name: mvtec-dev-split-${bundle.target}
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
+            dependencies: []  # add pip deps later if needed
+
+      tasks:
+        - task_key: create_dev_split
+          environment_key: default
+          spark_python_task:
+            python_file: ${workspace.root_path}/files/src/pipelines/generate_split.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "gold"
+              - "--input_table"
+              - "mvtec_ad"
+              - "--output_table"
+              - "dev_split"
+              - "--validate_proportion"
+              - "0.4"
+              - "--random_seed"
+              - "42"

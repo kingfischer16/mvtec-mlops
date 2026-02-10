@@ -1,0 +1,49 @@
+resources:  
+  # Create medallion schemas in each catalog
+  schemas:
+    dev_bronze:
+      catalog_name: dev
+      name: bronze
+    dev_silver:
+      catalog_name: dev
+      name: silver
+    dev_gold:
+      catalog_name: dev
+      name: gold
+    
+    test_bronze:
+      catalog_name: test
+      name: bronze
+    test_silver:
+      catalog_name: test
+      name: silver
+    test_gold:
+      catalog_name: test
+      name: gold
+    
+    prod_bronze:
+      catalog_name: prod
+      name: bronze
+    prod_silver:
+      catalog_name: prod
+      name: silver
+    prod_gold:
+      catalog_name: prod
+      name: gold
+  
+  # Create volumes for raw file drops (images, zips, wheels, etc.)
+  volumes: 
+    dev_bronze_raw_files:
+      catalog_name: dev
+      schema_name: bronze
+      name: raw_files
+
+    test_bronze_raw_files:
+      catalog_name: test
+      schema_name: bronze
+      name: raw_files
+
+    prod_bronze_raw_files:
+      catalog_name: prod
+      schema_name: bronze
+      name: raw_files
