@@ -1,0 +1,56 @@
+bundle:
+  name: mvtec-mlops-env
+
+
+include:
+  - resources/*.yml
+
+sync:
+  include:
+    - src/**
+    - resources/**
+  exclude:
+    - .git/**
+    #- .github/**
+    #- data/**
+    #- "**/*.tar"
+    #- "**/*.tar.gz"
+    #- "**/*.tar.xz"
+    #- "**/*.zip"
+    #- "**/*.parquet"
+    #- "**/*.npy"
+    #- "**/*.pt"
+    #- "**/*.pth"
+    #- "**/__pycache__/**"
+    #- "**/.pytest_cache/**"
+    #- "**/.DS_Store"
+
+variables:
+  catalog:
+    description: "Unity Catalog catalog name to deploy data assets into"
+    default: dev
+
+
+targets:
+  dev:
+    default: true
+    mode: production
+    workspace:
+      host: https://dbc-97bdbe9f-0433.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: dev
+  test:
+    mode: production
+    workspace:
+      host: https://dbc-97bdbe9f-0433.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: test
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-97bdbe9f-0433.cloud.databricks.com
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: prod
