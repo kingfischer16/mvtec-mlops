@@ -7,7 +7,6 @@ Purpose
 Looks at the gold metadata table and splits the "test" DataSplit into "validate" and "test" split based on a random seed and a specified proportion for the "validate" split, e.g. validate_proportion=0.2 means that 20% of the "test" split will be assigned to the "validate" split and the remaining 80% will be assigned to the "test" split.
 """
 
-from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, when, rand
 import argparse
 
