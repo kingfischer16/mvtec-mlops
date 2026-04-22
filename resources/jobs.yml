@@ -19,7 +19,7 @@ resources:
             python_file: ${workspace.root_path}/files/src/notebooks/00_setup_environment.py
 
     # -----------------------------------------
-    # Job 2: Main pipeline (ingest → train → eval)
+    # Job 2: Main ML pipeline (train → eval)
     # -----------------------------------------
     mvtec_pipeline:
       name: mvtec-pipeline-${bundle.target}
